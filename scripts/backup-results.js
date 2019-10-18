@@ -24,14 +24,16 @@ const execute = async () => {
         await Promise.map(eventIds, async (eventId) => {
             try {
                 const { res, payload } = await Wreck.get(`https://www.regattacentral.com/servlet/DisplayRacesResults?Method=getResults&job_id=${JobID}&event_id=${eventId}&_=${now}`);
+                if (res.statusCode !== 200) throw new Error(payload.toString());
                 const hash = MD5(payload);
                 const key = `${JobID}/${eventId}/${hash}.json`;
                 try {
                     if (lastHashByEvent[eventId] === hash) {
                         return;
-                    } else {
-                        console.log(`[${new Date().toISOString()}] new hash ${hash} for ${eventId}`);
                     }
+                    // else {
+                    //     console.log(`[${new Date().toISOString()}] new hash ${hash} for ${eventId}`);
+                    // }
                     await S3.headObject({
                         Bucket: S3_BUCKET,
                         Key: key,
