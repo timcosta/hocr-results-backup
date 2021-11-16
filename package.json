@@ -6,7 +6,7 @@
   "dependencies": {
     "@hapi/hoek": "^8.2.4",
     "@hapi/wreck": "^15.1.0",
-    "aws-sdk": "^2.536.0",
+    "aws-sdk": "^2.814.0",
     "bluebird": "^3.5.5",
     "md5": "^2.2.1"
   },
